@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>BIOジェネレーター</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 2em; }
+    textarea { width: 100%; height: 100px; margin-top: 1em; }
+    button { margin-top: 1em; padding: 0.5em 1em; }
+    select, input { margin-top: 1em; width: 100%; }
+  </style>
+</head>
+<body>
+  <h1>自己紹介文ジェネレーター</h1>
+  <label>あなたの名前（またはニックネーム）</label>
+  <input type="text" id="name">
+
+  <label>趣味</label>
+  <input type="text" id="hobby">
+
+  <label>スタイルを選ぶ</label>
+  <select id="style">
+    <option value="kawaii">かわいい系</option>
+    <option value="chuuni">厨二病系</option>
+    <option value="normal">ノーマル</option>
+  </select>
+
+  <button onclick="generate()">自己紹介文を作成</button>
+
+  <textarea id="output" readonly></textarea>
+  <button onclick="copyText()">コピーする</button>
+
+  <script>
+    function generate() {
+      const name = document.getElementById("name").value;
+      const hobby = document.getElementById("hobby").value;
+      const style = document.getElementById("style").value;
+
+      let bio = "";
+
+      if (style === "kawaii") {
+        bio = `はじめまして！${name}です🐰💖\n${hobby}がだいすきで、毎日癒されてますっ🌸よろしくね〜！`;
+      } else if (style === "chuuni") {
+        bio = `我が名は${name}……影の世界に生きる者。\n${hobby}を糧に、この俗世を彷徨う定めよ。`;
+      } else {
+        bio = `こんにちは、${name}です。\n趣味は${hobby}です。よろしくお願いします！`;
+      }
+
+      document.getElementById("output").value = bio;
+    }
+
+    function copyText() {
+      const text = document.getElementById("output");
+      text.select();
+      document.execCommand("copy");
+      alert("コピーしました！");
+    }
+  </script>
+</body>
+</html>
