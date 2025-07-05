@@ -1,22 +1,81 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>BIOジェネレーター</title>
   <style>
-    body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 2em; }
-    textarea { width: 100%; height: 100px; margin-top: 1em; }
-    button { margin-top: 1em; padding: 0.5em 1em; }
-    select, input { margin-top: 1em; width: 100%; }
+    /* ページ全体の背景色と文字色 */
+    body {
+      font-family: "Yu Gothic", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 2em;
+      background-color: #f9f9f9;  /* 背景は薄いグレー */
+      color: #333333;             /* 文字は濃いグレー */
+    }
+
+    h1 {
+      text-align: center;
+      color: #4a90e2; /* 見出しは青系 */
+    }
+
+    label {
+      display: block;
+      margin-top: 1.5em;
+      font-weight: bold;
+      color: #555555;
+    }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      margin-top: 0.5em;
+      padding: 0.6em;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #4a90e2;
+      outline: none;
+      background-color: #fff;
+    }
+
+    button {
+      margin-top: 1.5em;
+      padding: 0.8em 1.5em;
+      font-size: 1em;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: block;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #357ABD;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
   </style>
 </head>
 <body>
   <h1>自己紹介文ジェネレーター</h1>
   <label>あなたの名前（またはニックネーム）</label>
-  <input type="text" id="name">
+  <input type="text" id="name" placeholder="例: ねも" />
 
   <label>趣味</label>
-  <input type="text" id="hobby">
+  <input type="text" id="hobby" placeholder="例: ゲーム、読書" />
 
   <label>スタイルを選ぶ</label>
   <select id="style">
@@ -27,14 +86,19 @@
 
   <button onclick="generate()">自己紹介文を作成</button>
 
-  <textarea id="output" readonly></textarea>
+  <textarea id="output" readonly placeholder="ここに自己紹介文が表示されます"></textarea>
   <button onclick="copyText()">コピーする</button>
 
   <script>
     function generate() {
-      const name = document.getElementById("name").value;
-      const hobby = document.getElementById("hobby").value;
+      const name = document.getElementById("name").value.trim();
+      const hobby = document.getElementById("hobby").value.trim();
       const style = document.getElementById("style").value;
+
+      if (!name || !hobby) {
+        alert("名前と趣味を入力してください！");
+        return;
+      }
 
       let bio = "";
 
