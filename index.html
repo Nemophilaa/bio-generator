@@ -4,27 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="google-site-verification" content="WntnhYxYhaDL5baqdHNTuPl8FmsFUZhTUF9Jq5nV9Sc" />
   <title>BIOジェネレーター</title>
+  <meta name="description" content="SNSやDiscordで使える！かわいい・中二病・普通の3タイプから選べる自己紹介文ジェネレーター。" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* ページ全体の背景色と文字色 */
     body {
       font-family: "Yu Gothic", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
       max-width: 600px;
       margin: auto;
       padding: 2em;
-      background-color: #f9f9f9;  /* 背景は薄いグレー */
-      color: #333333;             /* 文字は濃いグレー */
+      background-color: #f9f9f9;
+      color: #333;
     }
 
     h1 {
       text-align: center;
-      color: #4a90e2; /* 見出しは青系 */
+      color: #4a90e2;
     }
 
     label {
       display: block;
       margin-top: 1.5em;
       font-weight: bold;
-      color: #555555;
     }
 
     input[type="text"], select, textarea {
@@ -35,15 +35,6 @@
       border-radius: 6px;
       font-size: 1em;
       box-sizing: border-box;
-      transition: border-color 0.3s;
-    }
-
-    input[type="text"]:focus,
-    select:focus,
-    textarea:focus {
-      border-color: #4a90e2;
-      outline: none;
-      background-color: #fff;
     }
 
     button {
@@ -55,8 +46,6 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
-      display: block;
       width: 100%;
     }
 
@@ -68,30 +57,41 @@
       height: 120px;
       resize: vertical;
     }
-    .adsense-ad {
-      margin: 1.5em 0;
+
+    .share-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 1em;
+    }
+
+    .share-buttons button {
+      width: auto;
+      flex: 1;
+      margin: 0 0.5em;
+    }
+
+    footer {
+      margin-top: 2em;
       text-align: center;
+      font-size: 0.9em;
     }
   </style>
+
+  <!-- Google AdSense（広告コード） -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8000853368957329"
+    crossorigin="anonymous"></script>
 </head>
 <body>
   <h1>自己紹介文ジェネレーター</h1>
 
-  <!-- Google AdSense広告コードをここに貼り付け -->
-  <div class="adsense-ad">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8000853368957329"
-      crossorigin="anonymous"></script>
-    <!-- 自己紹介ジェネレーター_トップ広告 -->
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-8000853368957329"
-      data-ad-slot="9690945690"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
+  <!-- 上部広告 -->
+  <ins class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-8000853368957329"
+    data-ad-slot="9690945690"
+    data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 
   <label>あなたの名前（またはニックネーム）</label>
   <input type="text" id="name" placeholder="ここに名前を入力してね" />
@@ -111,7 +111,19 @@
   <textarea id="output" readonly placeholder="ここに自己紹介文が表示されます"></textarea>
   <button onclick="copyText()">コピーする</button>
 
+  <div class="share-buttons">
+    <button onclick="shareTwitter()">X (Twitter)</button>
+    <button onclick="shareLine()">LINE</button>
+    <button onclick="shareFacebook()">Facebook</button>
+  </div>
+
+  <footer>
+    <a href="privacy.html" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
+  </footer>
+
   <script>
+    const output = document.getElementById("output");
+
     function generate() {
       const name = document.getElementById("name").value.trim();
       const hobby = document.getElementById("hobby").value.trim();
@@ -123,7 +135,6 @@
       }
 
       let bio = "";
-
       if (style === "kawaii") {
         bio = `はじめまして！${name}です🐰💖\n${hobby}がだいすきで、毎日癒されてますっ🌸よろしくね〜！`;
       } else if (style === "chuuni") {
@@ -132,14 +143,30 @@
         bio = `こんにちは、${name}です。\n趣味は${hobby}です。よろしくお願いします！`;
       }
 
-      document.getElementById("output").value = bio;
+      output.value = bio;
     }
 
     function copyText() {
-      const text = document.getElementById("output");
-      text.select();
+      output.select();
       document.execCommand("copy");
       alert("コピーしました！");
+    }
+
+    function shareTwitter() {
+      const text = encodeURIComponent(output.value || "自己紹介ジェネレーターで自己紹介を作成しました！");
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, "_blank");
+    }
+
+    function shareLine() {
+      const text = encodeURIComponent(output.value || "自己紹介ジェネレーターで自己紹介を作成しました！");
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://social-plugins.line.me/lineit/share?text=${text}%0D%0A${url}`, "_blank");
+    }
+
+    function shareFacebook() {
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
     }
   </script>
 </body>
