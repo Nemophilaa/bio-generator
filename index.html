@@ -2,10 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>BIOジェネレーター | かわいい・中二病・普通の自己紹介文を作成</title>
-  <meta name="description" content="名前と趣味を入力するだけで、かわいい系・中二病系・普通系の3種類の自己紹介文が作れる無料ジェネレーター。SNSやDiscordに最適！" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
+  <title>BIOジェネレーター</title>
   <style>
     /* ページ全体の背景色と文字色 */
     body {
@@ -13,13 +10,13 @@
       max-width: 600px;
       margin: auto;
       padding: 2em;
-      background-color: #f9f9f9;
-      color: #333333;
+      background-color: #f9f9f9;  /* 背景は薄いグレー */
+      color: #333333;             /* 文字は濃いグレー */
     }
 
     h1 {
       text-align: center;
-      color: #4a90e2;
+      color: #4a90e2; /* 見出しは青系 */
     }
 
     label {
@@ -62,106 +59,40 @@
       width: 100%;
     }
 
-    button:hover:enabled {
+    button:hover {
       background-color: #357ABD;
-    }
-    button:disabled {
-      background-color: #a0c4ff;
-      cursor: not-allowed;
     }
 
     textarea {
       height: 120px;
       resize: vertical;
     }
-
-    /* SNSシェアボタン用 */
-    .sns-share {
-      margin-top: 2em;
-      text-align: center;
-    }
-    .sns-share button {
-      display: inline-block;
-      margin: 0 0.5em;
-      padding: 0.5em 1em;
-      font-size: 0.9em;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      color: white;
-    }
-    .sns-twitter { background: #1DA1F2; }
-    .sns-line { background: #00c300; }
-    .sns-facebook { background: #3b5998; }
-
-    /* 広告エリア */
-    .ad-area {
-      margin-top: 2em;
-      text-align: center;
-      border: 1px dashed #ccc;
-      padding: 1em;
-      color: #666;
-      font-size: 0.9em;
-    }
-
   </style>
 </head>
 <body>
   <h1>自己紹介文ジェネレーター</h1>
-
-  <label for="name">あなたの名前（またはニックネーム）</label>
+  <label>あなたの名前（またはニックネーム）</label>
   <input type="text" id="name" placeholder="ここに名前を入力してね" />
 
-  <label for="hobby">趣味</label>
+  <label>趣味</label>
   <input type="text" id="hobby" placeholder="例: ゲーム、読書" />
 
-  <label for="style">スタイルを選ぶ</label>
+  <label>スタイルを選ぶ</label>
   <select id="style">
     <option value="kawaii">かわいい系</option>
     <option value="chuuni">厨二病系</option>
     <option value="normal">ノーマル</option>
   </select>
 
-  <button id="generateBtn" onclick="generate()" disabled>自己紹介文を作成</button>
+  <button onclick="generate()">自己紹介文を作成</button>
 
   <textarea id="output" readonly placeholder="ここに自己紹介文が表示されます"></textarea>
-  <button id="copyBtn" onclick="copyText()" disabled>コピーする</button>
-
-  <!-- 広告スペース（審査通過後にここに広告コードを貼り付けてください） -->
-  <div class="ad-area" id="adArea">
-    広告エリア（Google AdSense審査通過後にここに広告を設置します）
-  </div>
-
-  <!-- SNSシェアボタン -->
-  <div class="sns-share">
-    <button class="sns-twitter" onclick="shareTwitter()">Twitterでシェア</button>
-    <button class="sns-line" onclick="shareLine()">LINEでシェア</button>
-    <button class="sns-facebook" onclick="shareFacebook()">Facebookでシェア</button>
-  </div>
+  <button onclick="copyText()">コピーする</button>
 
   <script>
-    const nameInput = document.getElementById("name");
-    const hobbyInput = document.getElementById("hobby");
-    const generateBtn = document.getElementById("generateBtn");
-    const copyBtn = document.getElementById("copyBtn");
-    const output = document.getElementById("output");
-
-    // 入力チェックしてボタンの活性化
-    function checkInput() {
-      if (nameInput.value.trim() && hobbyInput.value.trim()) {
-        generateBtn.disabled = false;
-      } else {
-        generateBtn.disabled = true;
-        copyBtn.disabled = true;
-      }
-    }
-
-    nameInput.addEventListener("input", checkInput);
-    hobbyInput.addEventListener("input", checkInput);
-
     function generate() {
-      const name = nameInput.value.trim();
-      const hobby = hobbyInput.value.trim();
+      const name = document.getElementById("name").value.trim();
+      const hobby = document.getElementById("hobby").value.trim();
       const style = document.getElementById("style").value;
 
       if (!name || !hobby) {
@@ -179,26 +110,25 @@
         bio = `こんにちは、${name}です。\n趣味は${hobby}です。よろしくお願いします！`;
       }
 
-      output.value = bio;
-      copyBtn.disabled = false;
-      output.focus();
-      output.select();
+      document.getElementById("output").value = bio;
     }
 
     function copyText() {
-      if (!output.value) return;
-      output.select();
+      const text = document.getElementById("output");
+      text.select();
       document.execCommand("copy");
       alert("コピーしました！");
     }
 
     // SNSシェア関数
     function shareTwitter() {
+      const output = document.getElementById("output");
       const text = encodeURIComponent(output.value || "自己紹介ジェネレーターで自己紹介を作成しました！");
       const url = encodeURIComponent(window.location.href);
       window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, "_blank");
     }
     function shareLine() {
+      const output = document.getElementById("output");
       const text = encodeURIComponent(output.value || "自己紹介ジェネレーターで自己紹介を作成しました！");
       const url = encodeURIComponent(window.location.href);
       window.open(`https://social-plugins.line.me/lineit/share?text=${text}%0D%0A${url}`, "_blank");
@@ -207,9 +137,10 @@
       const url = encodeURIComponent(window.location.href);
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
     }
-
-    // ページ読み込み時に入力チェック
-    checkInput();
   </script>
+
+  <footer style="margin-top: 2em; text-align: center; font-size: 0.9em;">
+    <a href="privacy.html" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>
+  </footer>
 </body>
 </html>
